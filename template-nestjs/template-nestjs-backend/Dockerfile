@@ -15,7 +15,7 @@ COPY --chown=node:node . .
 RUN pnpm install
 
 # Generate Prisma database client code
-# RUN pnpm run prisma:generate
+RUN pnpm run prisma:generate
 
 USER node
 
