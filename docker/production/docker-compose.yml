@@ -1,0 +1,81 @@
+services:
+  next-app:
+    container_name: next-app
+    build:
+      context: ../../template-next-app
+      dockerfile: Dockerfile.prod
+    # Set environment variables directly in the docker-compose file
+    # environment:
+    # ENV_VARIABLE: "ENV_VARIABLE"
+    # NEXT_PUBLIC_ENV_VARIABLE: "NEXT_PUBLIC_ENV_VARIABLE"
+    env_file:
+      - "../../template-next-app/.env"
+    restart: always
+    ports:
+      - 3000:3000
+    # command:
+    #   - pnpm start
+    networks:
+      - production_networks
+
+  nginx:
+    build:
+      context: ../../nginx
+      # dockerfile: nginx/Dockerfile
+    depends_on:
+      - next-app
+    ports:
+      - 80:80
+    networks:
+      - production_networks
+
+  nestjs-backend:
+    container_name: nestjs-backend
+    build:
+      context: ../../template-nestjs/template-nestjs-backend
+      dockerfile: ./Dockerfile
+      target: production
+    volumes:
+      - ../../template-nestjs/template-nestjs-backend:/usr/src/app
+    env_file:
+      - ../../template-nestjs/template-nestjs-backend/.env
+    ports:
+      - 3000:3000
+    depends_on:
+      - redis
+    networks:
+      - production_networks
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
+    networks:
+      - production_networks
+
+  postgres:
+    image: postgres
+    restart: always
+    env_file:
+      - ../../template-nestjs/template-nestjs-backend/.env
+    environment:
+      POSTGRES_DB: docker-nest-postgres
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      DATABASE_URL: postgresql://username:password@postgres:5432/docker-nest-postgres?schema=public
+    ports:
+      - "5432:5432"
+    volumes:
+      - docker-nest-postgres:/var/lib/postgresql/data
+
+networks:
+  production_networks:
+    driver: bridge
+
+volumes:
+  staticbuild:
+  redis:
+    driver: local
+  docker-nest-postgres:
