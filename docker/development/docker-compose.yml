@@ -30,6 +30,26 @@ services:
     networks:
       - development_networks
 
+  nestjs-analytics:
+    container_name: nestjs-analytics
+    build:
+      context: ../../template-nestjs/template-nestjs-analytics
+      dockerfile: ./Dockerfile
+      target: development
+    volumes:
+      - ../../template-nestjs/template-nestjs-analytics:/usr/src/app
+    env_file:
+      - ../../template-nestjs/template-nestjs-analytics/.env
+    # command: pnpm start:dev
+    command: sh -c "dockerize -wait tcp://zookeeper:2181 -wait tcp://kafka:9092 -wait tcp://postgres:5432 -wait tcp://redis:6379 -timeout 60s pnpm start:dev"
+    ports:
+      - 3002:3002
+    depends_on:
+      - redis
+      - kafka
+    networks:
+      - development_networks
+
   nestjs-backend:
     container_name: nestjs-backend
     build:
@@ -46,7 +66,7 @@ services:
       - 3001:3001
     depends_on:
       - redis
-      # - kafka1
+      - kafka
     networks:
       - development_networks
 
@@ -64,7 +84,7 @@ services:
     command: sh -c "dockerize -wait tcp://zookeeper:2181 -wait tcp://kafka:9092 -wait tcp://postgres:5432 -wait tcp://redis:6379 -timeout 60s pnpm start:dev"
     depends_on:
       - redis
-      # - kafka1
+      - kafka
     networks:
       - development_networks
 
@@ -100,9 +120,11 @@ services:
     ports:
       - "9000:9000"
     environment:
-      KAFKA_BROKERCONNECT: "localhost:29092"
+      KAFKA_BROKERCONNECT: "kafka:9092"
     depends_on:
       - "kafka"
+    networks:
+      - development_networks
 
   # kafka:
   #   image: obsidiandynamics/kafka
