@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "strictBindCallApply": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "jsx": "preserve",
+    "paths": {
+      "~server/*": ["./apps/template-nestjs/template-nestjs-backend/src/*"],
+      "~web/*": ["./apps/template-next-app/*"]
+    }
+  }
+}
