@@ -2,20 +2,21 @@ services:
   next-app:
     container_name: next-app
     build:
-      context: ../../template-next-app
+      context: ../../apps/template-next-app
       dockerfile: ./Dockerfile.dev
     # Set environment variables directly in the docker-compose file
     # environment:
     # ENV_VARIABLE: "ENV_VARIABLE"
     # NEXT_PUBLIC_ENV_VARIABLE: "NEXT_PUBLIC_ENV_VARIABLE"
     env_file:
-      - "../../template-next-app/.env"
+      - "../../apps/template-next-app/.env"
     volumes:
       - staticbuild:/app/node_modules
-      - ../../template-next-app/:/app/
+      - ../../apps/template-next-app/:/app/apps/template-next-app/
+      - ../../tsconfig.json/:/app/tsconfig.json
     restart: always
-    ports:
-      - 3000:3000
+    # ports:
+    #   - 3000:3000
     networks:
       - development_networks
 
@@ -33,13 +34,13 @@ services:
   nestjs-analytics:
     container_name: nestjs-analytics
     build:
-      context: ../../template-nestjs/template-nestjs-analytics
+      context: ../../apps/template-nestjs/template-nestjs-analytics
       dockerfile: ./Dockerfile
       target: development
     volumes:
-      - ../../template-nestjs/template-nestjs-analytics:/usr/src/app
+      - ../../apps/template-nestjs/template-nestjs-analytics:/usr/src/app
     env_file:
-      - ../../template-nestjs/template-nestjs-analytics/.env
+      - ../../apps/template-nestjs/template-nestjs-analytics/.env
     # command: pnpm start:dev
     command: sh -c "dockerize -wait tcp://zookeeper:2181 -wait tcp://kafka:9092 -wait tcp://postgres:5432 -wait tcp://redis:6379 -timeout 60s pnpm start:dev"
     ports:
@@ -53,13 +54,13 @@ services:
   nestjs-backend:
     container_name: nestjs-backend
     build:
-      context: ../../template-nestjs/template-nestjs-backend
+      context: ../../apps/template-nestjs/template-nestjs-backend
       dockerfile: ./Dockerfile
       target: development
     volumes:
-      - ../../template-nestjs/template-nestjs-backend:/usr/src/app
+      - ../../apps/template-nestjs/template-nestjs-backend:/usr/src/app
     env_file:
-      - ../../template-nestjs/template-nestjs-backend/.env
+      - ../../apps/template-nestjs/template-nestjs-backend/.env
     # command: pnpm start:dev
     command: sh -c "dockerize -wait tcp://zookeeper:2181 -wait tcp://kafka:9092 -wait tcp://postgres:5432 -wait tcp://redis:6379 -timeout 60s pnpm start:dev"
     ports:
@@ -73,13 +74,13 @@ services:
   nestjs-communication:
     container_name: nestjs-communication
     build:
-      context: ../../template-nestjs/template-nestjs-communication
+      context: ../../apps/template-nestjs/template-nestjs-communication
       dockerfile: ./Dockerfile
       target: development
     volumes:
-      - ../../template-nestjs/template-nestjs-communication:/usr/src/app
+      - ../../apps/template-nestjs/template-nestjs-communication:/usr/src/app
     env_file:
-      - ../../template-nestjs/template-nestjs-communication/.env
+      - ../../apps/template-nestjs/template-nestjs-communication/.env
     # command: pnpm start:dev
     command: sh -c "dockerize -wait tcp://zookeeper:2181 -wait tcp://kafka:9092 -wait tcp://postgres:5432 -wait tcp://redis:6379 -timeout 60s pnpm start:dev"
     depends_on:
@@ -101,7 +102,7 @@ services:
     image: postgres
     restart: always
     env_file:
-      - ../../template-nestjs/template-nestjs-backend/.env
+      - ../../apps/template-nestjs/template-nestjs-backend/.env
     environment:
       POSTGRES_DB: docker-nest-postgres
       POSTGRES_USER: username
