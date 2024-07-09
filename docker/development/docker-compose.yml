@@ -12,8 +12,7 @@ services:
       - "../../apps/template-next-app/.env"
     volumes:
       - staticbuild:/app/node_modules
-      - ../../apps/template-next-app/:/app/apps/template-next-app/
-      - ../../tsconfig.json/:/app/tsconfig.json
+      - ../../apps/template-next-app/:/app/
     restart: always
     # ports:
     #   - 3000:3000

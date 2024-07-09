@@ -10,7 +10,6 @@
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "jsx": "preserve",
     "paths": {
       "~server/*": ["./apps/template-nestjs/template-nestjs-backend/src/*"],
       "~web/*": ["./apps/template-next-app/*"]
@@ -20,7 +19,8 @@
     "strict": false,
     "noEmit": true,
     "module": "esnext",
-    "esModuleInterop": true,
+    "esModuleInterop": false, //
+    "jsx": "preserve",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
