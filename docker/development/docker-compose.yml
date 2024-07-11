@@ -100,8 +100,6 @@ services:
   postgres:
     image: postgres
     restart: always
-    env_file:
-      - ../../apps/template-nestjs/template-nestjs-backend/.env
     environment:
       POSTGRES_DB: docker-nest-postgres
       POSTGRES_USER: username
