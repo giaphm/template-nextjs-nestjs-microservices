@@ -46,7 +46,7 @@ $ make build-development
 $ make start-development
 ```
 
-# Running staging(Updating...)
+# Running staging
 
 You can run staging environment using terminal at the root directory:
 
@@ -58,7 +58,7 @@ $ make build-staging
 $ make start-staging
 ```
 
-# Running production(Updating...)
+# Running production
 
 You can run production environment using terminal at the root directory:
 
