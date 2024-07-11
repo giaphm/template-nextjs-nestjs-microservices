@@ -34,7 +34,7 @@ $ cd apps/template-nestjs/template-nestjs/communication && pnpm install
 $ cd apps/template-nestjs/template-nestjs/email && pnpm install
 ```
 
-# Running locally
+## Running locally
 
 You can run local environment using terminal at the root directory:
 
@@ -46,7 +46,7 @@ $ make build-development
 $ make start-development
 ```
 
-# Running staging
+## Running staging
 
 You can run staging environment using terminal at the root directory:
 
@@ -58,7 +58,7 @@ $ make build-staging
 $ make start-staging
 ```
 
-# Running production
+## Running production
 
 You can run production environment using terminal at the root directory:
 
