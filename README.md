@@ -1,4 +1,4 @@
-<p align="center" style="font-size: 40px; font-weight: 600;">Template nextjs-nestjs-microservices for starters</p>
+# Template nextjs-nestjs-microservices for starters
 
 ## Description
 
