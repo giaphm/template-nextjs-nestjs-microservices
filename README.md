@@ -1,3 +1,5 @@
+<p align="center">Template nextjs-nestjs-microservices for starters</p>
+
 ## Description
 
 Template for starting Nx with technologies: Nextjs, Nestjs microservices, kafka, docker-compose with multi-env, husky, lint-staged
